@@ -1,0 +1,161 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Position &amp; forecast track of typhoons for West Pacific Ocean (KMA)</title>
+
+<style type="text/css" media="screen">
+
+@media screen and (max-width: 480px)
+{
+
+img {
+    margin: auto;
+    max-width: 100%;
+    xheight: auto;
+    height: 100%;
+    width:auto;
+}
+
+</style>
+
+</head>
+<body>
+ 
+<script language="JavaScript" type="text/javascript">
+
+function dateTimeImage()
+{
+
+ var today = new Date();
+ var hour = today.getUTCHours();
+ var todaymore9h = today.getTime() + (9 * 60 * 60* 1000);
+ var today9 = new Date(todaymore9h);
+ var hourKR = today9.getUTCHours();
+
+ var run = "04";
+ // 22->23
+ if      (hourKR > 21) { run = "22"; }
+ // 19->21
+ else if  (hourKR > 18) { run = "19"; }
+// 16-18
+ else if  (hourKR > 15) { run = "16"; }
+ // 10->15 
+ else if  (hourKR > 9) { run = "10"; }
+ // 04->09
+ else if  (hourKR > 3) { run = "04"; }
+ // 00->03
+ else if (hourKR < 4) {  run = "22";  
+                         var yestardaymore9h = today9.getTime() - (24 * 60 * 60* 1000); 
+                         today9 = new Date(yestardaymore9h);
+                      }
+
+ var year = today9.getUTCFullYear();
+ var month = today9.getUTCMonth() + 1;
+ if (month < 10) {month = "0" + month;} 
+ var day = today9.getUTCDate();
+ if (day < 10) { day= "0" + day;}
+ var ymdh = "" + year + month + day + run  + "";
+ //alert( " h="+ hour + " hKR=" + hourKR + " d=" + day + " m="+ month + " r=" + run + " ymdh=" + ymdh);
+ return ymdh;
+}
+
+////////////////////////////////
+
+function dateTimeImage2()
+{
+
+ var today = new Date();
+ var hour = today.getUTCHours();
+ var todaymore9h = today.getTime() + (9 * 60 * 60* 1000);
+ var today9 = new Date(todaymore9h);
+ var hourKR = today9.getUTCHours();
+
+ var run = "04";
+ // 22->23
+ if      (hourKR > 21) { run = "19"; }
+ // 19->21
+ else if  (hourKR > 18) { run = "16"; }
+// 16-18
+ else if  (hourKR > 15) { run = "10"; }
+ // 10->15 
+ else if  (hourKR > 9) { run = "04"; }
+ // 04->09
+ else if  (hourKR > 3) { run = "22";  
+                         var yestardaymore9h = today9.getTime() - (24 * 60 * 60* 1000); 
+                         today9 = new Date(yestardaymore9h);
+ }
+ // 00->03
+ else if (hourKR < 4) {  run = "19";  
+                         var yestardaymore9h = today9.getTime() - (24 * 60 * 60* 1000); 
+                         today9 = new Date(yestardaymore9h);
+                      }
+
+ var year = today9.getUTCFullYear();
+ var month = today9.getUTCMonth() + 1;
+ if (month < 10) {month = "0" + month;}
+ var day = today9.getUTCDate(); 
+ if (day < 10) { day= "0" + day;}
+ var ymdh = "" +  + month + day + run  + "";
+ //alert( "Shift: h="+ hour + " hKR=" + hourKR + " d=" + day + " m="+ month + " r=" + run + " ymdh=" + ymdh);
+ return ymdh;
+}
+
+////////////////////////////////
+
+function checkImage(imageSrc) 
+{
+ var img = new Image();
+ img.src = imageSrc;
+ img.alt = "Map of West Pacific with position & forecast track of typhoons";
+ img.title = "West Pacific: Position & forecast track of typhoons";
+ img.onload = function(){ 
+  document.getElementById("kma").src = img.src; 
+  document.getElementById("kma").alt = img.alt; 
+  document.getElementById("kma").title = img.title; 
+ }
+}
+
+///////////////////////////////
+
+function findImage()
+{
+ var url ="";
+ var n = 35;
+ var ymdh = dateTimeImage();
+ var ymdh2 = dateTimeImage2();
+ var retour = 0;
+
+ //alert(ymdh); 
+ //checkImage("http://typ.kma.go.kr/repositary/image/typ/img/RTKO63_201511261000%5D26_ko.png");
+ //checkImage("http://web.kma.go.kr/repositary/image/typ/img_en/RTKO63_201707171900]04_en.png");
+ //checkImage("http://nauticalfree.free.fr/nautical/Anchor_right.png");
+ //checkImage("http://nauticalfree.free.fr/nautical/Anchor_left.png");
+
+ while (n > 0)
+ {
+  n2 = n;
+  if (n2 < 10) {n2 = "0" + n2;} 
+  url = "http://web.kma.go.kr/repositary/image/typ/img_en/RTKO63_" + ymdh2 + "00%5D" + n2 + "_en.png"; 
+  checkImage(url);
+  url = "http://web.kma.go.kr/repositary/image/typ/img_en/RTKO63_" + ymdh2 + "30%5D" + n2 + "_en.png";
+  checkImage(url);
+  url = "http://web.kma.go.kr/repositary/image/typ/img_en/RTKO63_" + ymdh + "00%5D" + n2 + "_en.png"; 
+  checkImage(url);
+  url = "http://web.kma.go.kr/repositary/image/typ/img_en/RTKO63_" + ymdh + "30%5D" + n2 + "_en.png";
+  checkImage(url);
+  n = n - 1;
+ }
+
+} 
+
+///////////////////////////:
+
+findImage();
+
+</script>
+
+<center><a target="_blank" href="http://web.kma.go.kr/eng/weather/typoon/typhoon_5days.jsp"><img id="kma" alt="Map not found..." title="Try to find map..."" src="http://nauticalfree.free.fr/images/Img_KR_KMA_MapNotFound.png"/></a></center>
+
+</body>
+</html>
